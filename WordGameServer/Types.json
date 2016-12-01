@@ -1,0 +1,17 @@
+//login
+{
+"Type":LOGIN,
+"name":"",
+"psd":""
+}
+{
+    "Type":GET_LOGIN,
+    "result":1/0
+}
+
+
+
+
+
+
+
