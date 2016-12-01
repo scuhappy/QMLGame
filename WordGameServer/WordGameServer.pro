@@ -9,14 +9,14 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp \
-    Server.cpp \
-    workthread.cpp
+SOURCES += src\main.cpp \
+    src\Server.cpp \
+    src\workthread.cpp
 
 HEADERS += \
-    Server.h \
-    workthread.h \
-    Types.h
+    src\Server.h \
+    src\workthread.h \
+    src\Types.h
 
 OTHER_FILES += \
     Types.json
