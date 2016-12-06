@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 
     logicalObj.init(&model);
-    if(!logicalObj.StarClient())
+    if(logicalObj.StarClient()<0)
     {
         return -1;
     }

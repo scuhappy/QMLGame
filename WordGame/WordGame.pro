@@ -2,6 +2,9 @@ QT += qml quick
 
 CONFIG += c++11
 
+INCLUDEPATH+= E:\\QMLGames\\boost_1_62_0
+LIBS+= -LE:\QMLGames\boost_1_62_0\stage\lib
+
 SOURCES += src/main.cpp \
     src/Tools.cpp \
     src/Client.cpp \

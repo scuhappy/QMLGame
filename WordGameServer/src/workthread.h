@@ -16,7 +16,9 @@ private:
     void Login(const QJsonObject& msg);
 private:
     QTcpSocket * m_socket;
+    QTcpSocket * tmpSocket;
     bool m_stop;
+    int m_index;
 };
 
 #endif // WORKTHREAD_H

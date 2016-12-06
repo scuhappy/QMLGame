@@ -14,6 +14,8 @@ public:
     explicit WriteWorker(QObject *parent = 0);
     void init(Model* model);
     void AddMsg(QJsonObject obj);
+
+    void StopThread();
 protected:
     void run();
 private:
@@ -25,9 +27,11 @@ private:
     bool m_stop;
     QQueue<QJsonObject> m_queue;
 signals:
-
+    void Restart();
+    void Stoped();
 public slots:
     void DoWork();
+    void RestartThread();
 };
 
 #endif // WRITEWORKER_H

@@ -114,7 +114,7 @@ Item {
 //                                messageDialog.open();
 
 //                            }
-
+                            console.debug("name : ",nameinput.text,"password : ",pswinput.text);
                             logical.sendLogin(nameinput.text, pswinput.text)
                         }
                     }

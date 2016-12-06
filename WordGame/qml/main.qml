@@ -12,32 +12,19 @@ ApplicationWindow {
 
     LoginPage{
         id:loginpage
-        visible: !clientmodel.Login
+        visible: true
+        opacity: clientmodel.Login ? 0:1
         anchors.fill: parent;
         z:1
-        Behavior on visible {
-
-             animation: hidelogin
-        }
-//        onClose:
-//        {
-//            gamepage.visible=true;
-//            hidelogin.running = true;
-//            gamepage.z = 2;
-//        }
+        Behavior on opacity {
+                NumberAnimation { duration: 5000; easing.type: Easing.InQuad;}
+            }
     }
     GamePage{
         id:gamepage
         anchors.fill: parent
         visible: clientmodel.Login
         z:0
-    }
-    PropertyAnimation {
-        id: hidelogin;
-        target: loginpage;
-        property: "opacity";
-        to: 0;
-        duration: 1000
     }
 
 }

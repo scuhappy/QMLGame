@@ -14,9 +14,10 @@ public:
 private:
     QTcpServer* m_tcpServer;
     QList<WorkThread*> m_threadList;
-
+    int m_index;
 private:
     void SendInitInfo(QTcpSocket* socket);
+    void Login(QTcpSocket* socket,const QJsonObject& msg);
 signals:
 
 public slots:

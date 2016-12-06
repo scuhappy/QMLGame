@@ -16,15 +16,20 @@ public:
     int init(Model* model);
     int StarClient();
     Q_INVOKABLE void sendLogin(QVariant name,QVariant psw);
+
 private:
     Client* m_client;
-//    QTcpSocket* m_socket;
+    QTcpSocket* m_socket;
     ReadWorker* m_reader;
     WriteWorker* m_writer;
     Model* m_model;
+    int m_index;
 signals:
 
 public slots:
+    void RestartWriter();
+
+    void DoWork();
 
 };
 
