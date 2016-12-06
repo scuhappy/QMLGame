@@ -3,6 +3,9 @@
 #include<QTcpSocket>
 #include<QJsonDocument>
 #include<QJsonObject>
+#include<QSqlQuery>
+#include<QSqlError>
+#include"Types.h"
 Server::Server(QObject *parent) : QObject(parent)
 {
     m_index=0;
@@ -12,6 +15,28 @@ void Server::init()
 {
     m_tcpServer = new QTcpServer();
     connect(m_tcpServer,SIGNAL(newConnection()),this,SLOT(NewConnection()));
+
+    //database
+    m_db = QSqlDatabase::addDatabase("QSQLITE");
+    m_db.setHostName("WordGame");
+    m_db.setDatabaseName("UserDB");
+    m_db.setUserName("ychen");
+    m_db.setPassword("654321");
+    bool ok = m_db.open();
+    QSqlQuery query;
+    if(query.exec("CREATE TABLE Persons"\
+               "("\
+               "UserName varchar(255),"\
+               "Password varchar(255)"\
+               ");"))
+    {
+        qDebug()<<"Create table success!";
+    }
+    else
+    {
+        qDebug()<<query.lastError().text();
+    }
+
 }
 int Server::StartServer()
 {
@@ -25,10 +50,6 @@ void Server::NewConnection()
     QTcpSocket * socket = m_tcpServer->nextPendingConnection();
     connect(socket,SIGNAL(readyRead()),this,SLOT(DoRead()));
     connect(socket,SIGNAL(disconnected()),socket,SLOT(deleteLater()));
-//    WorkThread* worker = new WorkThread();
-//    worker->init(socket);
-//    worker->start();
-//    m_threadList.append(worker);
 }
 void Server::DoRead()
 {
@@ -52,12 +73,12 @@ void Server::DoRead()
 }
 void Server::Login(QTcpSocket* socket,const QJsonObject& msg)
 {
-    for(int i =0;i<10;i++)
-    {
     m_index++;
     QJsonObject obj;
     obj.insert("Type",GET_LOGIN);
     obj.insert("Index",m_index);
+    QSqlQuery query;
+    query.exec("");
     if(msg.value("name").toString()=="ychen" && msg.value("psd").toString()=="123")
     {
         obj.insert("result",1);
@@ -71,5 +92,4 @@ void Server::Login(QTcpSocket* socket,const QJsonObject& msg)
     qDebug()<<"write buffer "<<ary;
     socket->write(ary+'^');
     socket->waitForBytesWritten();
-    }
 }

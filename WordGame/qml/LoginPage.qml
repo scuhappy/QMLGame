@@ -7,6 +7,7 @@ Item {
     property int mid_text: 20
     property int small_text: 18
     signal close()
+    signal signup()
     Rectangle{
         id:root
         anchors.fill: parent
@@ -105,15 +106,6 @@ Item {
                             font.pixelSize: small_text
                         }
                         onClicked: {
-//                            if(nameinput.text=="ychen" && pswinput.text=="123")
-//                            {
-//                                close();
-//                            }
-//                            else
-//                            {
-//                                messageDialog.open();
-
-//                            }
                             console.debug("name : ",nameinput.text,"password : ",pswinput.text);
                             logical.sendLogin(nameinput.text, pswinput.text)
                         }

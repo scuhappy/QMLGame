@@ -1,4 +1,4 @@
-QT += core network
+QT += core network sql
 QT -= gui
 
 CONFIG += c++11
@@ -11,11 +11,9 @@ TEMPLATE = app
 
 SOURCES += src\main.cpp \
     src\Server.cpp \
-    src\workthread.cpp
 
 HEADERS += \
     src\Server.h \
-    src\workthread.h \
     src\Types.h
 
 OTHER_FILES += \

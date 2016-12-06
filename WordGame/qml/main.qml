@@ -26,5 +26,10 @@ ApplicationWindow {
         visible: clientmodel.Login
         z:0
     }
+    SignUpPage{
+        id:signup
+        anchors.fill: parent
+        visible: false;
+    }
 
 }

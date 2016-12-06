@@ -1,6 +1,7 @@
 #include "Logical.h"
 #include<QDebug>
 #include<QJsonObject>
+#include<QJsonDocument>
 #include"Types.h"
 Logical::Logical(QObject *parent) :
     QObject(parent)
@@ -13,13 +14,7 @@ int Logical::init(Model* model)
     {
         return -1;
     }
-    else
-    {
-        m_model = model;
-        m_writer = new WriteWorker();
-        connect(m_writer,SIGNAL(Restart()),this,SLOT(RestartWriter()));
-        connect(m_writer,SIGNAL(Stoped()),m_writer,SLOT(start()));//restart the writer when stopped
-    }
+    m_model = model;
 
 }
 void Logical::sendLogin(QVariant name, QVariant psw)
@@ -30,14 +25,11 @@ void Logical::sendLogin(QVariant name, QVariant psw)
     obj.insert("Type",LOGIN);
     obj.insert("name",name.toString());
     obj.insert("psd",psw.toString());
-//    m_writer->AddMsg(obj);
     m_socket->write(QJsonDocument(obj).toJson(QJsonDocument::Compact));
 }
 
 int Logical::StarClient()
 {
-//    m_writer->init(m_model);
-//    m_writer->start();
     m_socket =new QTcpSocket(this);
     m_socket->connectToHost("127.0.0.1",777);
     connect(m_socket,SIGNAL(readyRead()),this,SLOT(DoWork()));
@@ -59,7 +51,7 @@ void Logical::DoWork()
         case GET_LOGIN:
         {
             qDebug()<<obj.value("result").toInt();
-           // GetLogin(obj);
+            GetLogin(obj);
             break;
         }
         default:
@@ -68,7 +60,7 @@ void Logical::DoWork()
     }
 
 }
-void Logical::RestartWriter()
+void Logical::GetLogin(const QJsonObject &obj)
 {
-    m_writer->StopThread();
+    m_model->setLogin(obj.value("result").toInt()==1 ? true:false);
 }

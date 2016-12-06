@@ -1,9 +1,8 @@
 #ifndef SERVER_H
 #define SERVER_H
-
 #include <QObject>
 #include<QTcpServer>
-#include"workthread.h"
+#include<QSqlTableModel>
 class Server : public QObject
 {
     Q_OBJECT
@@ -13,8 +12,8 @@ public:
     int StartServer();
 private:
     QTcpServer* m_tcpServer;
-    QList<WorkThread*> m_threadList;
     int m_index;
+    QSqlDatabase m_db;
 private:
     void SendInitInfo(QTcpSocket* socket);
     void Login(QTcpSocket* socket,const QJsonObject& msg);
