@@ -49,7 +49,7 @@ void Server::NewConnection()
 
     QTcpSocket * socket = m_tcpServer->nextPendingConnection();
     connect(socket,SIGNAL(readyRead()),this,SLOT(DoRead()));
-    connect(socket,SIGNAL(disconnected()),socket,SLOT(deleteLater()));
+    connect(socket,SIGNAL(disconnected()),this,SLOT(m_slot_disconnect()));
     qDebug()<<"new connect received IP address : "<<socket->peerAddress().toString()\
            <<" port : "<<socket->localPort();
 }
@@ -58,6 +58,7 @@ void Server::m_slot_disconnect()
     QTcpSocket* socket = static_cast<QTcpSocket*>(sender());
     qDebug()<<"Disconnected IP address : "<<socket->peerAddress().toString()\
            <<" port : "<<socket->localPort();
+    socket->deleteLater();
 }
 
 void Server::DoRead()

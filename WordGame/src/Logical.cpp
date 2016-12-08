@@ -44,15 +44,14 @@ int Logical::StarClient()
 {
     qDebug()<<QThread::currentThreadId();
     m_socket =new QTcpSocket();
-    m_socket->connectToHost(m_host,m_port);
-    while(!m_socket->waitForConnected())
+    do
     {
         qDebug()<<"connect to server";
         m_socket->connectToHost(m_host,m_port);
         QThread::msleep(1000);
     }
+    while(!m_socket->waitForConnected());
     connect(m_socket,SIGNAL(readyRead()),this,SLOT(DoWork()));
-    connect(m_socket,SIGNAL(disconnected()),m_socket,SLOT(deleteLater()));
     connect(m_socket,SIGNAL(disconnected()),this,SLOT(ReConnect()));
     return 0;
 }
@@ -83,13 +82,18 @@ void Logical::DoWork()
 }
 void Logical::ReConnect()
 {
-    m_socket->connectToHost(m_host,m_port);
-    while(!m_socket->waitForConnected())
-    {
+    m_model->setLogin(false);
+
+    do{
         qDebug()<<"reconnect to server";
         m_socket->connectToHost(m_host,m_port);
         QThread::msleep(1000);
     }
+    while(!m_socket->waitForConnected());
+    QThread::msleep(1000);
+    m_socket->write("hello world!");
+    m_socket->waitForBytesWritten();
+    qDebug()<<"connected";
 }
 void Logical::Start()
 {
