@@ -46,11 +46,20 @@ int Server::StartServer()
 }
 void Server::NewConnection()
 {
-    qDebug()<<"new connect received";
+
     QTcpSocket * socket = m_tcpServer->nextPendingConnection();
     connect(socket,SIGNAL(readyRead()),this,SLOT(DoRead()));
     connect(socket,SIGNAL(disconnected()),socket,SLOT(deleteLater()));
+    qDebug()<<"new connect received IP address : "<<socket->peerAddress().toString()\
+           <<" port : "<<socket->localPort();
 }
+void Server::m_slot_disconnect()
+{
+    QTcpSocket* socket = static_cast<QTcpSocket*>(sender());
+    qDebug()<<"Disconnected IP address : "<<socket->peerAddress().toString()\
+           <<" port : "<<socket->localPort();
+}
+
 void Server::DoRead()
 {
     QTcpSocket* socket = static_cast<QTcpSocket*>(sender());

@@ -4,5 +4,7 @@
         <file>qml/LoginPage.qml</file>
         <file>qml/GamePage.qml</file>
         <file>qml/Card.qml</file>
+        <file>qml/SignUpPage.qml</file>
+        <file>Resources/smoke.png</file>
     </qresource>
 </RCC>

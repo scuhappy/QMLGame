@@ -11,7 +11,7 @@ Item {
     Rectangle{
         id:root
         anchors.fill: parent
-        color: "#00B000"
+        color: "#000000"
         Rectangle{
             id:center
             anchors.centerIn:root
@@ -28,6 +28,7 @@ Item {
                     text: "Login"
                     font.pixelSize: large_text
                     anchors.horizontalCenter: parent.horizontalCenter
+                    color:"white"
                 }
                 Row{
                     spacing: 10
@@ -35,6 +36,7 @@ Item {
                         id: namelabel
                         text:"User Name"
                         font.pixelSize: mid_text
+                        color:"white"
                         width: 100
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -59,6 +61,7 @@ Item {
                         id: passlabel
                         text:"Password"
                         font.pixelSize: mid_text
+                        color:"white"
                         width: 100
                         anchors.verticalCenter: parent.verticalCenter
                     }

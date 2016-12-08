@@ -22,6 +22,7 @@ signals:
 public slots:
     void NewConnection();
     void DoRead();
+    void m_slot_disconnect();
 };
 
 #endif // SERVER_H
